@@ -1,4 +1,55 @@
 @echo off
+setlocal EnableDelayedExpansion
+
+:: Version actuelle du script
+set "LOCAL_VERSION=v1.0.0"
+
+:: URL vers la dernière version et la dernière version.txt sur GitHub
+set "REMOTE_SCRIPT_URL=https://github.com/Theo985/Windows-Tools/blob/main/batsh%20tools.bat"
+set "REMOTE_VERSION_URL=https://github.com/Theo985/Windows-Tools/blob/main/version.txt"
+
+:: Dossier temporaire
+set "TMP_FILE=%TEMP%\script_update.tmp"
+set "TMP_VER=%TEMP%\version_check.tmp"
+
+:: Téléchargement de version.txt
+powershell -Command "Invoke-WebRequest -Uri '%REMOTE_VERSION_URL%' -OutFile '%TMP_VER%' -UseBasicParsing" >nul 2>&1
+
+if not exist "%TMP_VER%" (
+    echo ❌ Impossible de vérifier les mises à jour.
+    goto :SKIP_UPDATE
+)
+
+set /p REMOTE_VERSION=<%TMP_VER%
+del "%TMP_VER%"
+
+if "!LOCAL_VERSION!" == "!REMOTE_VERSION!" (
+    echo ✅ Script à jour [!LOCAL_VERSION!]
+    goto :SKIP_UPDATE
+) else (
+    echo 🔄 Mise à jour disponible: !LOCAL_VERSION! → !REMOTE_VERSION!
+)
+
+:: Télécharger et remplacer le script
+powershell -Command "Invoke-WebRequest -Uri '%REMOTE_SCRIPT_URL%' -OutFile '%TMP_FILE%' -UseBasicParsing" >nul 2>&1
+
+if not exist "%TMP_FILE%" (
+    echo ❌ Échec du téléchargement de la mise à jour.
+    goto :SKIP_UPDATE
+)
+
+copy /Y "%TMP_FILE%" "%~f0" >nul
+del "%TMP_FILE%"
+
+echo ✅ Mise à jour réussie. Redémarrage...
+timeout /t 2 >nul
+start "" "%~f0"
+exit /b
+
+:SKIP_UPDATE
+
+
+@echo off
 title Kondax Tools
 color 0B
 
