@@ -50,7 +50,7 @@ exit /b
 
 
 @echo off
-title Kondax Tools
+title Tools
 color 0B
 
 :: Vérifie si le script a les droits admin
@@ -66,33 +66,29 @@ cls
 echo ============================
 echo        TOOLS
 echo ============================
-echo 1. Afficher la date et l'heure
-echo 2. Voir les fichiers du dossier courant
-echo 3. Nettoyer les fichiers temporaires
-echo 4. Infos sur le PC
-echo 6. Menu Anti-Virus
-echo 7. Menu Réseau
-echo 8. Menu Utilisateurs et Sécurité
-echo 9. Menu Sauvegarde et Restauration
-echo 10. Menu Personnalisation
-echo 11. Menu Region
-echo 12. Menu Optimisation
-echo 13. Quitter
+echo 1. Voir les fichiers du dossier courant
+echo 2. Information Systeme
+echo 3. Menu Anti-Virus
+echo 4. Menu Réseau
+echo 5. Menu Utilisateurs et Sécurité
+echo 6. Menu Sauvegarde et Restauration
+echo 7. Menu Personnalisation
+echo 8. Menu Region
+echo 9. Menu Optimisation
+echo 10. Quitter
 echo ============================
 set /p choix="Choisis une option : "
 
-if "%choix%"=="1" goto DATE
-if "%choix%"=="2" goto FILES
-if "%choix%"=="3" goto CLEAN
-if "%choix%"=="4" goto INFO
-if "%choix%"=="6" goto MENU_VIRUS
-if "%choix%"=="7" goto MENU_RESEAU
-if "%choix%"=="8" goto MENU_USERS
-if "%choix%"=="9" goto MENU_SAUVEGARDE
-if "%choix%"=="10" goto MENU_PERSONNALISATION
-if "%choix%"=="11" goto MENU_REGIONS
-if "%choix%"=="12" goto MENU_OPTIMISATION
-if "%choix%"=="13" goto END
+if "%choix%"=="1" goto FILES
+if "%choix%"=="2" goto INFO_SYSTEME
+if "%choix%"=="3" goto MENU_VIRUS
+if "%choix%"=="4" goto MENU_RESEAU
+if "%choix%"=="5" goto MENU_USERS
+if "%choix%"=="6" goto MENU_SAUVEGARDE
+if "%choix%"=="7" goto MENU_PERSONNALISATION
+if "%choix%"=="8" goto MENU_REGIONS
+if "%choix%"=="9" goto MENU_OPTIMISATION
+if "%choix%"=="10" goto END
 goto MENU
 
 
@@ -691,13 +687,14 @@ goto menu_region
 cls
 echo ======== MODIFICATION ACL NTFS =======
 echo 1. Nettoyage complet Cache
-echo 2. Retour
-echo 3. 
+echo 2. Nettoyer les fichiers temporaires
+echo 3. Retour
 echo =====================================
 set /p choix="Choisis une option : "
 
 if "%choix%"=="1" goto MENU_CLEAR_CACHE
-if "%choix%"=="2" goto MENU
+if "%choix%"=="2" goto CLEAN
+if "%choix%"=="3" goto MENU
 
 
 :MENU_CLEAR_CACHE
@@ -732,3 +729,17 @@ echo.
 echo ✅ Le cache a été nettoyé !
 pause
 goto MENU_OPTIMISATION
+
+
+:INFO_SYSTEME
+cls
+echo ======== INFORMATION SYSTEME =======
+echo 1. Date et Heure
+echo 2. Information de l'ordinateur
+echo 3. Retour
+echo =====================================
+set /p choix="Choisis une option : "
+
+if "%choix%"=="1" goto DATE
+if "%choix%"=="2" goto INFO
+if "%choix%"=="3" goto MENU
